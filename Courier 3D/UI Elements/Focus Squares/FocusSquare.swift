@@ -53,7 +53,9 @@ class FocusSquare: SCNNode {
 	override init() {
 		super.init()
 		self.opacity = 0.0
+        // add focusSquareNode into self
 		self.addChildNode(focusSquareNode)
+        // Execute the animation
 		open()
 	}
 	
@@ -170,6 +172,7 @@ class FocusSquare: SCNNode {
 	}
     
 	private func open() {
+        // if it is on the process of open animation than terminate then current open animation
 		if isOpen || isAnimating {
 			return
 		}
@@ -179,7 +182,7 @@ class FocusSquare: SCNNode {
         SCNTransaction.animationTimingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
 		SCNTransaction.animationDuration = animationDuration / 4
 		focusSquareNode.opacity = 1.0
-        self.segments.forEach { segment in segment.open() }
+        self.segments.forEach { $0.open() }
 		SCNTransaction.completionBlock = { self.focusSquareNode.runAction(self.pulseAction(), forKey: "pulse") }
 		SCNTransaction.commit()
 		
@@ -187,7 +190,7 @@ class FocusSquare: SCNNode {
 		SCNTransaction.begin()
         SCNTransaction.animationTimingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
 		SCNTransaction.animationDuration = animationDuration / 4
-		focusSquareNode.setUniformScale(focusSquareSize)
+		focusSquareNode.setUniformScale(focusSquareSize )
 		SCNTransaction.commit()
 		
 		isOpen = true
@@ -211,7 +214,7 @@ class FocusSquare: SCNNode {
 			SCNTransaction.begin()
             SCNTransaction.animationTimingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
 			SCNTransaction.animationDuration = self.animationDuration / 4
-            self.segments.forEach { segment in segment.close() }
+            self.segments.forEach { $0.close() }
 			SCNTransaction.completionBlock = { self.isAnimating = false }
 			SCNTransaction.commit()
 		}
@@ -270,7 +273,8 @@ class FocusSquare: SCNNode {
 
 		return scaleAnimation
 	}
-	
+	// Segment is defined in FocusSquare's extension
+    // So the segment class have to be wrote as FoucsSquare.Segment
 	private var segments: [FocusSquare.Segment] = []
 	
     private lazy var fillPlane: SCNNode = {
@@ -278,11 +282,14 @@ class FocusSquare: SCNNode {
         let plane = SCNPlane(width: CGFloat(1.0 - focusSquareThickness * 2 + c),
                              height: CGFloat(1.0 - focusSquareThickness * 2 + c))
         let node = SCNNode(geometry: plane)
+        // You can provide a descriptive name for a node to make managing your scene graph easier
         node.name = "fillPlane"
+        // Set this node's initial opacity as 0.0
         node.opacity = 0.0
 
         let material = plane.firstMaterial!
         material.diffuse.contents = FocusSquare.primaryColorLight
+        // this plane have to be rendered double side
         material.isDoubleSided = true
         material.ambient.contents = UIColor.black
         material.lightingModel = .constant
@@ -312,16 +319,16 @@ class FocusSquare: SCNNode {
         let s8 = Segment(name: "s8", corner: .bottomRight, alignment: .horizontal)
 
         let segmentLength: Float = 0.5  // segment length
-        let correctionOffset: Float = focusSquareThickness / 2 // correction to align lines perfe23ctly
+        let correctionOffset: Float = focusSquareThickness / 2 // correction to align lines perfectly (to form a seamless retangle)
         
-        s1.simdPosition += float3( -(segmentLength / 2 - correctionOffset), -(segmentLength - correctionOffset), 0)
-		s2.simdPosition += float3(   segmentLength / 2 - correctionOffset , -(segmentLength - correctionOffset), 0)
-        s3.simdPosition += float3(  -segmentLength,                          -segmentLength / 2,                 0)
-        s4.simdPosition += float3(   segmentLength,                          -segmentLength / 2,                 0)
-		s5.simdPosition += float3(  -segmentLength,                           segmentLength / 2,                 0)
-		s6.simdPosition += float3(   segmentLength,                           segmentLength / 2,                 0)
-		s7.simdPosition += float3( -(segmentLength / 2 - correctionOffset),   segmentLength - correctionOffset,  0)
-		s8.simdPosition += float3(   segmentLength / 2 - correctionOffset,    segmentLength - correctionOffset,  0)
+        s1.simdPosition += float3( -segmentLength / 2 + correctionOffset, -segmentLength + correctionOffset,  0)
+		s2.simdPosition += float3(  segmentLength / 2 - correctionOffset ,-segmentLength + correctionOffset, 0)
+        s3.simdPosition += float3( -segmentLength,                        -segmentLength / 2,                 0)
+        s4.simdPosition += float3(  segmentLength,                        -segmentLength / 2,                 0)
+		s5.simdPosition += float3( -segmentLength,                         segmentLength / 2,                 0)
+		s6.simdPosition += float3(  segmentLength,                         segmentLength / 2,                 0)
+		s7.simdPosition += float3( -segmentLength / 2 + correctionOffset,  segmentLength - correctionOffset,  0)
+		s8.simdPosition += float3(  segmentLength / 2 - correctionOffset,  segmentLength - correctionOffset,  0)
 
 		let planeNode = SCNNode()
 		planeNode.eulerAngles.x = .pi / 2 // Horizontal
@@ -336,6 +343,7 @@ class FocusSquare: SCNNode {
 		planeNode.addChildNode(s8)
 		planeNode.addChildNode(fillPlane)
 		segments = [s1, s2, s3, s4, s5, s6, s7, s8]
+        // Set the initial state of FocusSquare as Open
 		isOpen = false
 		
 		// Always render focus square on top

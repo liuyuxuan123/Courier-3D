@@ -24,5 +24,10 @@
         "displayName": "Chair",
         "particleScaleInfo": { }
     },
+    {
+        "modelName": "house",
+        "displayName": "House",
+        "particleScaleInfo": { }
+    },
 ]
  

@@ -8,15 +8,17 @@ Popover view controller for choosing virtual objects to place in the AR scene.
 import UIKit
 
 // MARK: - ObjectCell
-
+// Table view cell -> Load info from JSON file
 class ObjectCell: UITableViewCell {
     
     static let reuseIdentifier = "ObjectCell"
-    
+    // objectTitleLable.text = displayName
     @IBOutlet weak var objectTitleLabel: UILabel!
+    // objectImageView.image = UIImage(named: modelName)
     @IBOutlet weak var objectImageView: UIImageView!
         
     var object: VirtualObjectDefinition? {
+        // when object seted -> set its objectTitileLabel and objectImageView automatically
         didSet {
             objectTitleLabel.text = object?.displayName
             objectImageView.image = object?.thumbnailImage
@@ -32,13 +34,12 @@ protocol VirtualObjectSelectionViewControllerDelegate: class {
 }
 
 class VirtualObjectSelectionViewController: UITableViewController {
-
+    // A collection of unique integer values that represent the indexes of selected elements
     private var selectedVirtualObjectRows = IndexSet()
     weak var delegate: VirtualObjectSelectionViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         tableView.separatorEffect = UIVibrancyEffect(blurEffect: UIBlurEffect(style: .light))
     }
     
@@ -50,18 +51,26 @@ class VirtualObjectSelectionViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Check if the current row is already selected, then deselect it.
+        // Because this is just a popover view so make a delegate and let the main view controller handle the selected situation
         if selectedVirtualObjectRows.contains(indexPath.row) {
             delegate?.virtualObjectSelectionViewController(self, didDeselectObjectAt: indexPath.row)
         } else {
             delegate?.virtualObjectSelectionViewController(self, didSelectObjectAt: indexPath.row)
         }
+        // dismiss the popover table view
         self.dismiss(animated: true, completion: nil)
     }
         
     // MARK: - UITableViewDataSource
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // number of row in section
         return VirtualObjectManager.availableObjects.count
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        // number of section
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

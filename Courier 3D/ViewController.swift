@@ -155,8 +155,11 @@ class ViewController: UIViewController {
         planes[anchor] = plane
         node.addChildNode(plane)
         
+        // Fire the schedule to show .planEstimation
         textManager.cancelScheduledMessage(forType: .planeEstimation)
+        // When a plane is detected display a message to show that surface have been detected
         textManager.showMessage("SURFACE DETECTED")
+        // If there is no virtualObject in the ARSCNView than recommand user to add object into this view after 7.5 seconds
         if virtualObjectManager.virtualObjects.isEmpty {
             textManager.scheduleMessage("TAP + TO PLACE AN OBJECT", inSeconds: 7.5, messageType: .contentPlacement)
         }
@@ -177,7 +180,8 @@ class ViewController: UIViewController {
     func resetTracking() {
         session.run(standardConfiguration, options: [.resetTracking, .removeExistingAnchors])
         
-        textManager.scheduleMessage("FIND A SURFACE TO PLACE AN OBJECT",
+        // When resetTracking it will schedule a message about Find a surface to place your house
+        textManager.scheduleMessage("FIND A SURFACE TO PLACE YOUR HOUSE MODEL OR ACCESSORY MODEL",
                                     inSeconds: 7.5,
                                     messageType: .planeEstimation)
     }
@@ -193,7 +197,7 @@ class ViewController: UIViewController {
             self.focusSquare = FocusSquare()
             self.sceneView.scene.rootNode.addChildNode(self.focusSquare!)
         }
-        
+        // When foucesSquare have been set than ready to show message about "Try moving left or right" to notify user to move their iPhone around in order to get more feature of plane
         textManager.scheduleMessage("TRY MOVING LEFT OR RIGHT", inSeconds: 5.0, messageType: .focusSquare)
     }
     
@@ -222,6 +226,7 @@ class ViewController: UIViewController {
                 self.serialQueue.async {
                     self.focusSquare?.update(for: worldPos, planeAnchor: planeAnchor, camera: self.session.currentFrame?.camera)
                 }
+                // If there is enough feature of a plane than cancel the schedule to let user to move around to get more feature
                 self.textManager.cancelScheduledMessage(forType: .focusSquare)
             }
         }
@@ -231,11 +236,13 @@ class ViewController: UIViewController {
     
     func displayErrorMessage(title: String, message: String, allowRestart: Bool = false) {
         // Blur the background.
+        // When you about to show an alert than make your message label and message panel blur
         textManager.blurBackground()
         
         if allowRestart {
             // Present an alert informing about the error that has occurred.
             let restartAction = UIAlertAction(title: "Reset", style: .default) { _ in
+                // When alert have been removed than make message label and message panel unblur
                 self.textManager.unblurBackground()
                 self.restartExperience(self)
             }

@@ -8,12 +8,19 @@ Manages gesture interactions with the AR scene.
 import Foundation
 import ARKit
 
+
+//  Limit object dragging to the two-dimensional plane the object rests on. (Especially if a plane represents the ground or floor, it often makes sense to ignore the plane's extent while dragging.)
+
+//  Limit object rotation to a single axis at a time. (In this sample, each object rests on a plane, so the object can rotate around a vertical axis.)
+
+//  Don't allow the user to resize virtual objects, or offer this ability only sparingly. A virtual object inhabits the real world more convincingly when it has an intuitive intrinsic size. Additionally, a user may become confused as to whether they're resizing an object or changing its depth relative to the camera. (If you do provide object resizing, use pinch gestures.)
+
 /// - Tag: Gesture
 class Gesture {
     
     // MARK: - Types
-    
 	enum TouchEventType {
+        // Gesture Stage
 		case touchBegan
 		case touchMoved
 		case touchEnded

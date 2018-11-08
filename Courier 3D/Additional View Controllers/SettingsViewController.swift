@@ -7,6 +7,7 @@ Popover view controller for app settings.
 
 import UIKit
 
+
 enum Setting: String {
     case scaleWithPinchGesture
     case dragOnInfinitePlanes
@@ -18,6 +19,10 @@ enum Setting: String {
     }
 }
 
+
+
+// Write your version of UserDefaults extension
+// create short hand proporty for project
 extension UserDefaults {
     func bool(for setting: Setting) -> Bool {
         return bool(forKey: setting.rawValue)
@@ -41,9 +46,10 @@ class SettingsViewController: UITableViewController {
         
     }
     
+    // The value in this setting view is stored in UserDefaults
+    // Every time this view appear will get the value from UserDefault again
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         let defaults = UserDefaults.standard
         scaleWithPinchGestureSwitch.isOn = defaults.bool(for: .scaleWithPinchGesture)
         dragOnInfinitePlanesSwitch.isOn = defaults.bool(for: .dragOnInfinitePlanes)
@@ -54,7 +60,8 @@ class SettingsViewController: UITableViewController {
     }
     
     // MARK: - Actions
-    
+    // Any change in either of the two switches will trigger this function.
+    // It will modify values stored in UserDefaults
 	@IBAction func didChangeSetting(_ sender: UISwitch) {
 		let defaults = UserDefaults.standard
 		switch sender {
