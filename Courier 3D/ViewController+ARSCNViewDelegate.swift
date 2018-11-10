@@ -10,6 +10,8 @@ import ARKit
 extension ViewController: ARSCNViewDelegate {
     // MARK: - ARSCNViewDelegate
     
+    
+    // Tells the delegate to perform any updates that need to occur before actions, animations, and physics are evaluated.
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         updateFocusSquare()
         
@@ -21,9 +23,21 @@ extension ViewController: ARSCNViewDelegate {
         }
     }
     
+    // This method gets called each time ARKit detects what it considers to be a new plane
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
         serialQueue.async {
+           
+            // This add plane is quiet different from the add plane function in demo
+//            guard let anchor = anchor as? ARPlaneAnchor else { return }
+//            let planeGeometry = SCNPlane(width: CGFloat(anchor.extent.x), height: CGFloat(anchor.extent.y))
+//            let planeNode = SCNNode(geometry: planeGeometry)
+//            planeNode.position = SCNVector3(anchor.center.x, 0, anchor.center.z)
+//            planeNode.eulerAngles.x = -Float.pi / 2
+//            let material = planeNode.geometry?.firstMaterial
+//            material?.diffuse.contents = UIColor.ChiliRed
+//            node.addChildNode(planeNode)
+            //
             self.addPlane(node: node, anchor: planeAnchor)
             self.virtualObjectManager.checkIfObjectShouldMoveOntoPlane(anchor: planeAnchor, planeAnchorNode: node)
         }

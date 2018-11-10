@@ -12,15 +12,23 @@ class SingleFingerGesture: Gesture {
     
     // MARK: - Properties
     
+    // Why do not set it as an CGPint?
+    // instead it set its initial value as CGPoint()
     var initialTouchLocation = CGPoint()
     var latestTouchLocation = CGPoint()
     
+    // Your firstTouchObject have to be a virtual object
+    // Or it will make nonsense
     var firstTouchedObject: VirtualObject?
 
+    // Maximum distance that can be moved
     let translationThreshold: CGFloat = 30
     var translationThresholdPassed = false
+    
+    // To determine whether this object have been moverd or not.
     var hasMovedObject = false
     
+    // The drag offset of your operation
     var dragOffset = CGPoint()
     
     // MARK: - Initialization
@@ -31,6 +39,8 @@ class SingleFingerGesture: Gesture {
         let touch = currentTouches.first!
         initialTouchLocation = touch.location(in: sceneView)
         latestTouchLocation = initialTouchLocation
+        
+        print("initialTouchLocation \(initialTouchLocation)")
         
         firstTouchedObject = virtualObject(at: initialTouchLocation)
     }

@@ -11,6 +11,7 @@ import UIKit
 // Table view cell -> Load info from JSON file
 class ObjectCell: UITableViewCell {
     
+    // UITableViewCell's identifier
     static let reuseIdentifier = "ObjectCell"
     // objectTitleLable.text = displayName
     @IBOutlet weak var objectTitleLabel: UILabel!
@@ -18,7 +19,7 @@ class ObjectCell: UITableViewCell {
     @IBOutlet weak var objectImageView: UIImageView!
         
     var object: VirtualObjectDefinition? {
-        // when object seted -> set its objectTitileLabel and objectImageView automatically
+        // When object seted -> set its objectTitileLabel and objectImageView automatically
         didSet {
             objectTitleLabel.text = object?.displayName
             objectImageView.image = object?.thumbnailImage

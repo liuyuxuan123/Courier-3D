@@ -187,13 +187,18 @@ class ViewController: UIViewController {
     }
     
     // MARK: - Focus Square
-    
+    // ViewController contain a focusSquare to control access this
     var focusSquare: FocusSquare?
     
+    
+    
+    // Will be called when the scene is set at very first time
+    // Will be called when user restart the session
     func setupFocusSquare() {
         serialQueue.async {
             self.focusSquare?.isHidden = true
             self.focusSquare?.removeFromParentNode()
+            
             self.focusSquare = FocusSquare()
             self.sceneView.scene.rootNode.addChildNode(self.focusSquare!)
         }
@@ -203,16 +208,20 @@ class ViewController: UIViewController {
     
     func updateFocusSquare() {
         guard let screenCenter = screenCenter else { return }
-        
+        // this change have to be execute in Main Queue
+        // it will change when it frame update
         DispatchQueue.main.async {
             var objectVisible = false
             for object in self.virtualObjectManager.virtualObjects {
+                // Returns a Boolean value indicating whether a node might be visible from a specified point of view.
                 if self.sceneView.isNode(object, insideFrustumOf: self.sceneView.pointOfView!) {
                     objectVisible = true
                     break
                 }
             }
-            
+            // If there is an object that is visible then hide the focusSquare
+            // And if there is no virtualObject visible then unhide the focusSquare
+            // This will not influnce the virtual object in the ARSCNView 
             if objectVisible {
                 self.focusSquare?.hide()
             } else {

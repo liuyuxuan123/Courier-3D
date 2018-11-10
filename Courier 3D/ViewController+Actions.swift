@@ -16,11 +16,11 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
     }
     
     // MARK: - Interface Actions
-    
+    // Basically used to perform Segue
     @IBAction func chooseObject(_ button: UIButton) {
         // Abort if we are about to load another object to avoid concurrent modifications of the scene.
         if isLoadingObject { return }
-        
+        // Cancel the timer of .contentPlacement
         textManager.cancelScheduledMessage(forType: .contentPlacement)
         performSegue(withIdentifier: SegueIdentifier.showObjects.rawValue, sender: button)
     }
@@ -32,25 +32,32 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         DispatchQueue.main.async {
             self.restartExperienceButtonIsEnabled = false
             
+            // Fire all the schedule
             self.textManager.cancelAllScheduledMessages()
             self.textManager.dismissPresentedAlert()
+            // Show message that start a new session
             self.textManager.showMessage("STARTING A NEW SESSION")
             
+            // Remove all virtualObjects away from screen
             self.virtualObjectManager.removeAllVirtualObjects()
             self.addObjectButton.setImage(#imageLiteral(resourceName: "add"), for: [])
             self.addObjectButton.setImage(#imageLiteral(resourceName: "addPressed"), for: [.highlighted])
+            
+            // hide focus square
+            // Let the ARSession detect a new plane
             self.focusSquare?.isHidden = true
             
             self.resetTracking()
-            
             self.restartExperienceButton.setImage(#imageLiteral(resourceName: "restart"), for: [])
             
             // Show the focus square after a short delay to ensure all plane anchors have been deleted.
+            // 0.5 second to create a little delay for the focusSquare set up
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
                 self.setupFocusSquare()
             })
             
             // Disable Restart button for a while in order to give the session enough time to restart.
+            //
             DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
                 self.restartExperienceButtonIsEnabled = true
             })

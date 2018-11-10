@@ -13,6 +13,9 @@ class TwoFingerGesture: Gesture {
     
     // MARK: - Properties
     
+    
+    // UITouch is an object representing the location, size, movement, and force of a touch occurring on the screen.
+    // First Touch represent your first finger on screen and second touch represent your second finger on screen
     var firstTouch = UITouch()
     var secondTouch = UITouch()
     
