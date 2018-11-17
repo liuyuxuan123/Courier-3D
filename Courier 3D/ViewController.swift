@@ -5,6 +5,14 @@
  Main view controller for the AR experience.
  */
 
+
+
+// To Do
+//1. Add Physical Body to 3D Model
+//2. To Remove in Table View so that User Can Remove Models
+//3. Fix Center Point to the Middle
+//4. Change the Animations
+
 import ARKit
 import SceneKit
 import UIKit
