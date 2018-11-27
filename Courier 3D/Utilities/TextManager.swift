@@ -8,7 +8,7 @@
 import Foundation
 import ARKit
 
-enum MessageType {
+enum TextMessageType {
     case trackingStateEscalation
     case planeEstimation
     case contentPlacement
@@ -17,6 +17,20 @@ enum MessageType {
 
 // Using an extension to get information for ARCamera
 extension ARCamera.TrackingState {
+    
+    // Get the recommend operation string for the current state
+    var recommendedOperationString: String? {
+        switch self {
+        case .limited(.excessiveMotion):
+            return "Try slowing down your movement, or reset the session."
+        case .limited(.insufficientFeatures):
+            return "Try pointing at a flat surface, or reset the session."
+        default:
+            return nil
+        }
+    }
+    
+    // Get the prompt string for the current state
     var presentationString: String {
         switch self {
         case .notAvailable:
@@ -36,16 +50,7 @@ extension ARCamera.TrackingState {
             }
         }
     }
-    var recommendation: String? {
-        switch self {
-        case .limited(.excessiveMotion):
-            return "Try slowing down your movement, or reset the session."
-        case .limited(.insufficientFeatures):
-            return "Try pointing at a flat surface, or reset the session."
-        default:
-            return nil
-        }
-    }
+    
 }
 
 // This TextManager Class is wroten for the ViewController and it cannot be reused for another class
@@ -60,12 +65,11 @@ class TextManager {
     
     // Timers for showing scheduled messages
     // Manage the time to let the massage box disappear
+    // 4 timer corresponding to four states
     private var focusSquareMessageTimer: Timer?
     private var planeEstimationMessageTimer: Timer?
     private var contentPlacementMessageTimer: Timer?
-    
-    // Timer for tracking state escalation
-    private var trackingStateFeedbackEscalationTimer: Timer?
+    private var trackingStateFeedbackEscalationTimer: Timer?      // Timer for tracking state escalation
     
     let blurEffectViewTag = 100
     var schedulingMessagesBlocked = false
@@ -114,7 +118,7 @@ class TextManager {
         }
     }
     
-    func scheduleMessage(_ text: String, inSeconds seconds: TimeInterval, messageType: MessageType) {
+    func scheduleMessage(_ text: String, inSeconds seconds: TimeInterval, messageType: TextMessageType) {
         // Do not schedule a new message if a feedback escalation alert is still on screen.
         guard !schedulingMessagesBlocked else {
             return
@@ -158,7 +162,7 @@ class TextManager {
         }
     }
     
-    func cancelScheduledMessage(forType messageType: MessageType) {
+    func cancelScheduledMessage(forType messageType: TextMessageType) {
         var timer: Timer?
         switch messageType {
         case .contentPlacement:
@@ -202,7 +206,7 @@ class TextManager {
         
         self.trackingStateFeedbackEscalationTimer = Timer.scheduledTimer(withTimeInterval: seconds, repeats: false, block: { _ in
             
-            if let recommendation = trackingState.recommendation {
+            if let recommendation = trackingState.recommendedOperationString {
                 self.showMessage(trackingState.presentationString + "\n" + recommendation, autoHide: false)
             } else {
                 self.showMessage(trackingState.presentationString, autoHide: false)

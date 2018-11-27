@@ -177,7 +177,7 @@
         <!--settingsViewController-->
         <scene sceneID="pSD-CO-weg">
             <objects>
-                <tableViewController id="IKg-MU-uun" userLabel="settingsViewController" customClass="SettingsViewController" customModule="ARKitExample" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="IKg-MU-uun" userLabel="settingsViewController" customClass="SettingsViewController" customModule="Courier_3D" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="static" style="grouped" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="Mgv-vr-1lU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="220"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -268,14 +268,14 @@
         <!--Virtual Object Selection View Controller-->
         <scene sceneID="Vl1-4b-JEA">
             <objects>
-                <tableViewController id="Z5E-5C-kXW" customClass="VirtualObjectSelectionViewController" customModule="ARKitExample" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="Z5E-5C-kXW" customClass="VirtualObjectSelectionViewController" customModule="Courier_3D" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="45" sectionHeaderHeight="28" sectionFooterHeight="28" id="oig-if-I0K">
                         <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ObjectCell" id="OPm-YV-vKs" customClass="ObjectCell" customModule="ARKitExample" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ObjectCell" id="OPm-YV-vKs" customClass="ObjectCell" customModule="Courier_3D" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="250" height="45"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OPm-YV-vKs" id="P53-zo-HOb">
@@ -331,10 +331,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="add" width="16" height="16"/>
-        <image name="restart" width="16" height="16"/>
-        <image name="restartPressed" width="16" height="16"/>
-        <image name="settings" width="16" height="16"/>
-        <image name="settingsPressed" width="16" height="16"/>
+        <image name="add" width="48" height="48"/>
+        <image name="restart" width="20" height="23"/>
+        <image name="restartPressed" width="20" height="23"/>
+        <image name="settings" width="41" height="48"/>
+        <image name="settingsPressed" width="41" height="48"/>
     </resources>
 </document>

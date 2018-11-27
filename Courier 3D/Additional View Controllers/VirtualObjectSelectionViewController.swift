@@ -89,14 +89,25 @@ class VirtualObjectSelectionViewController: UITableViewController {
         return cell
     }
     
+    // When Press TableViewCell
     override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
     }
     
+    // When Unpress TableViewCell
     override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.backgroundColor = UIColor.clear
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            VirtualObjectManager.removeAvailableObject(at: indexPath.row)
+        default:
+            print("Nothing")
+        }
     }
 
 }

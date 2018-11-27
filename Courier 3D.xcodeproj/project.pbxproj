@@ -28,6 +28,7 @@
 		3185DF20219394C9005150AA /* Models.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 3185DF1C219394C9005150AA /* Models.scnassets */; };
 		3185DF22219394C9005150AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3185DF1E219394C9005150AA /* Assets.xcassets */; };
 		3185DF252193D3BB005150AA /* EntourageColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3185DF242193D3BB005150AA /* EntourageColor.swift */; };
+		31ACA0EC21ADDB0500F61AC7 /* FocusCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31ACA0EB21ADDB0500F61AC7 /* FocusCircle.swift */; };
 		31C836562183EF0200C2BE8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C836552183EF0200C2BE8F /* AppDelegate.swift */; };
 		31C8365A2183EF0200C2BE8F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C836592183EF0200C2BE8F /* ViewController.swift */; };
 		31C8365D2183EF0200C2BE8F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31C8365B2183EF0200C2BE8F /* Main.storyboard */; };
@@ -56,6 +57,7 @@
 		3185DF1C219394C9005150AA /* Models.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Models.scnassets; sourceTree = "<group>"; };
 		3185DF1E219394C9005150AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3185DF242193D3BB005150AA /* EntourageColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntourageColor.swift; sourceTree = "<group>"; };
+		31ACA0EB21ADDB0500F61AC7 /* FocusCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCircle.swift; sourceTree = "<group>"; };
 		31C836522183EF0200C2BE8F /* Courier 3D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Courier 3D.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		31C836552183EF0200C2BE8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		31C836592183EF0200C2BE8F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -78,11 +80,11 @@
 		3185DEF72193907F005150AA /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				3185DEFB2193907F005150AA /* SceneExtensions.swift */,
 				3185DF242193D3BB005150AA /* EntourageColor.swift */,
 				3185DEF82193907F005150AA /* Utilities.swift */,
 				3185DEF92193907F005150AA /* ARSCNView+HitTests.swift */,
 				3185DEFA2193907F005150AA /* TextManager.swift */,
-				3185DEFB2193907F005150AA /* SceneExtensions.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -100,6 +102,7 @@
 		3185DEFF21939080005150AA /* UI Elements */ = {
 			isa = PBXGroup;
 			children = (
+				31ACA0EA21ADD60B00F61AC7 /* Focus Circle */,
 				3185DF0021939080005150AA /* Focus Squares */,
 				3185DF0321939080005150AA /* Gestures */,
 				3185DF0721939080005150AA /* Plane.swift */,
@@ -142,6 +145,14 @@
 				3185DF1E219394C9005150AA /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		31ACA0EA21ADD60B00F61AC7 /* Focus Circle */ = {
+			isa = PBXGroup;
+			children = (
+				31ACA0EB21ADDB0500F61AC7 /* FocusCircle.swift */,
+			);
+			path = "Focus Circle";
 			sourceTree = "<group>";
 		};
 		31C836492183EF0200C2BE8F = {
@@ -273,6 +284,7 @@
 				3185DE5721937FF1005150AA /* ViewController+ObjectSelection.swift in Sources */,
 				3185DF1121939080005150AA /* FocusSquareSegment.swift in Sources */,
 				3185DF1821939080005150AA /* SettingsViewController.swift in Sources */,
+				31ACA0EC21ADDB0500F61AC7 /* FocusCircle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,6 +368,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -410,6 +423,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -429,7 +443,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "yuxuanliu.gwu.edu.Courier-3D";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -448,7 +462,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "yuxuanliu.gwu.edu.Courier-3D";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

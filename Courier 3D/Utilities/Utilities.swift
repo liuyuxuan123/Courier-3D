@@ -15,27 +15,26 @@ extension Array where Iterator.Element == Float {
 			return nil
 		}
 		
-		let sum = self.reduce(Float(0)) { current, next in
-			return current + next
-		}
+		let sum = self.reduce(0.0) {    return $0 + $1    }
 		return sum / Float(self.count)
 	}
 }
 
+
+// A vector of three `Float`.  This corresponds to the C and
+// Obj-C type `vector_float3` and the C++ type `simd::float3`.
 extension Array where Iterator.Element == float3 {
 	var average: float3? {
 		guard !self.isEmpty else {
 			return nil
 		}
   
-        let sum = self.reduce(float3(0)) { current, next in
-            return current + next
-        }
+        let sum = self.reduce(float3(0.0)) {    return $0 + $1    }
 		return sum / Float(self.count)
 	}
 }
 
-extension RangeReplaceableCollection where IndexDistance == Int {
+extension RangeReplaceableCollection{
 	mutating func keepLast(_ elementsToKeep: Int) {
 		if count > elementsToKeep {
 			self.removeFirst(count - elementsToKeep)
@@ -44,7 +43,6 @@ extension RangeReplaceableCollection where IndexDistance == Int {
 }
 
 // MARK: - SCNNode extension
-
 extension SCNNode {
 	
 	func setUniformScale(_ scale: Float) {
@@ -80,12 +78,14 @@ extension float4x4 {
 extension CGPoint {
 	
 	init(_ size: CGSize) {
-		self.x = size.width
+        self.init()
+        self.x = size.width
 		self.y = size.height
 	}
 	
 	init(_ vector: SCNVector3) {
-		self.x = CGFloat(vector.x)
+        self.init()
+        self.x = CGFloat(vector.x)
 		self.y = CGFloat(vector.y)
 	}
 	
@@ -137,7 +137,8 @@ extension CGPoint {
 
 extension CGSize {
 	init(_ point: CGPoint) {
-		self.width = point.x
+        self.init()
+        self.width = point.x
 		self.height = point.y
 	}
 

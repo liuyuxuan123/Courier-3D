@@ -10,6 +10,9 @@ import SceneKit
 import ARKit
 
 struct VirtualObjectDefinition: Codable, Equatable {
+    // typealias Codable = Decodable & Encodable
+    // All collections types, like Array and Dictionary are also codable if they contain codable types.
+    
     let modelName: String
     let displayName: String
     let particleScaleInfo: [String: Float]

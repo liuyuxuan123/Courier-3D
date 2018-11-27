@@ -14,6 +14,7 @@ extension ViewController: ARSCNViewDelegate {
     // Tells the delegate to perform any updates that need to occur before actions, animations, and physics are evaluated.
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         updateFocusSquare()
+
         
         // If light estimation is enabled, update the intensity of the model's lights and the environment map
         if let lightEstimate = session.currentFrame?.lightEstimate {
@@ -38,6 +39,8 @@ extension ViewController: ARSCNViewDelegate {
 //            material?.diffuse.contents = UIColor.ChiliRed
 //            node.addChildNode(planeNode)
             //
+            
+            print("addPlane")
             self.addPlane(node: node, anchor: planeAnchor)
             self.virtualObjectManager.checkIfObjectShouldMoveOntoPlane(anchor: planeAnchor, planeAnchorNode: node)
         }

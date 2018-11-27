@@ -46,6 +46,30 @@ class VirtualObjectManager {
             fatalError("Unable to decode VirtualObjects JSON: \(error)")
         }
     }()
+    
+    // MARK: - Test
+    static func removeAvailableObject(at index: Int){
+        // Predefined object (Defined in json file)
+        // Candle, Chair, Cup, Lamp, Vase
+        guard let jsonURL = Bundle.main.url(forResource: "VirtualObjects", withExtension: "json") else {
+            fatalError("Missing 'VirtualObjects.json' in bundle.")
+        }
+        
+        do {
+            let jsonData = try Data(contentsOf: jsonURL)
+            // json file store an array -> decode this array and create an array to store this info
+            // Inside do-catch statement, using try stead of try! or try?
+            var virtualObjects =  try JSONDecoder().decode([VirtualObjectDefinition].self, from: jsonData)
+            virtualObjects.remove(at: index)
+            let files = try JSONEncoder().encode(virtualObjects)
+            let jsonString = String(data: files, encoding: .utf8)
+            print(jsonString ?? "Nothing")
+        } catch {
+            // if don't contain json file
+            // or the format of json file is not correct then throw a fatalError
+            fatalError("Unable to decode VirtualObjects JSON: \(error)")
+        }
+    }
 
 	func removeAllVirtualObjects() {
 		for object in virtualObjects {
